@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>minesweeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 id="main_title"><a href="index.html">sweeper</a></h1>
+    </header>
+
+    <div class="controls">
+        <div class="control">
+            <label for="form_nick">Nick: </label>
+            <input type="text" maxlength="14" value="client" id="form_nick" name="form_nick">    
+        </div>
+        <div class="control">
+            <label for="form_width">Width: </label>
+            <input type="number" min="1" max="20" value="11" id="form_width" name="form_width">    
+        </div>
+        <div class="control">
+            <label for="form_height">Height: </label>
+            <input type="number" min="1" max="20" value="10" id="form_height" name="form_height">
+        </div>
+        <div class="control">
+            <label for="form_mines">Mines:</label>
+            <input type="number" id="form_mines" value="10" max="40" name="form_mines">    
+        </div>
+        <button onclick="validation()"><img src="./counters/endurance.png" width="32px"></button>
+    </div>
+
+
+    <div id="adult">
+            <div id="main_nav">
+                <div id="timer">00:00</div>
+            </div>
+
+            <div id="main_content" oncontextmenu="event.preventDefault();"></div>
+
+            <div id="gameInfo">
+                <div id="flags">Flags: 0</div>
+            </div>
+    </div>
+
+
+    <div id="leaderboard">
+        <div id="here-add-absolute">
+            <div id="title" onclick="showLeaderboard()">
+                <p id="TOPKA">T</p>
+            </div>
+            <div id="leaders"></div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
