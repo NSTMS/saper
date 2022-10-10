@@ -33,7 +33,11 @@ function validation()
     {
         interval = clearInterval(interval)
         alert("mordo, złe dane")
-    }else generateSweeper()
+    }else
+    {
+        interval = clearInterval(interval)
+        generateSweeper()
+    } 
     
 }
 
@@ -136,7 +140,13 @@ function createCubes()
 
 
 document.getElementById("main_content").addEventListener("click" ,(event)=>{
-    if(event.target.id != "main_content") cubesReveal(helper[event.target.id])
+    if(event.target.id != "main_content")
+    {
+        if(event.target.classList.contains("flag") && event.which !== 3) return
+        else cubesReveal(helper[event.target.id])
+    }
+
+
 })
 
 function cubesReveal(cube)
@@ -303,7 +313,6 @@ document.getElementById("main_content").addEventListener("mouseup" ,(event)=>{
         let minutes = 0
         let seconds = 0
         let time_counter = 0
-        console.log("siam")
         interval = setInterval(() => {
         seconds = seconds < 10 ? `0${seconds}` : seconds
         if(seconds % 60 == 0)
@@ -314,10 +323,11 @@ document.getElementById("main_content").addEventListener("mouseup" ,(event)=>{
         }
         document.getElementById("timer").innerText = `${minutes}:${seconds}`
         seconds++
-    },100)
+    },1000)
 
         click_counter++;
     }
+
     document.getElementById("flags").textContent = `Flags: ${flags}`
         if(event.which == 3)
         {
