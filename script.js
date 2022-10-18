@@ -296,11 +296,7 @@ function sortArray(array)
         map[time] = `${nickName} ${time} ${format}`
   })
 
-  let mapAsc = new Map([...map].sort((a, b) => String(a[0]).localeCompare(b[0])))
-
-  
-
-    return mapAsc
+    return map
 
 }
 
