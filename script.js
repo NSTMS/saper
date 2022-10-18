@@ -360,6 +360,17 @@ document.getElementById("main_content").addEventListener("mouseup" ,(event)=>{
             userTime = `${minutes}:${seconds}::${miliseconds}`
             miliseconds+=4
         },4)
+        interval = setInterval(() => {
+        seconds = seconds < 10 ? `0${seconds}` : seconds
+        if(seconds % 60 == 0)
+        {
+            time_counter != 0 ? minutes++ : time_counter++
+            minutes = minutes < 10 ? `0${minutes}` : minutes
+            seconds=0
+        }
+        document.getElementById("timer").innerText = `${minutes}:${seconds}`
+        seconds++
+    },1000)
 
         click_counter++;
     }
