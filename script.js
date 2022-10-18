@@ -273,8 +273,8 @@ function loadCookies()
         let array = document.cookie
         document.getElementById("leaders").innerHTML = ''
         array = array.split(",")
-        array = sortArray(array)
-        console.log("sorted:" , array)
+        // console.log(array)
+        // array = sortArray(array)
         array.forEach(element =>{
             let div = document.createElement("div")
             div.textContent = element
@@ -284,21 +284,26 @@ function loadCookies()
 
 }
 
-function sortArray(array)
-{
-    let map = new Map()
+// function sortArray(array)
+// {
+//     let map = new Map()
 
-    array.forEach( element =>{
-        let temp = element.split(" ")
-        let nickName = temp[0]
-        let time = temp[1]
-        let format = temp[4]
-        map[time] = `${nickName} ${time} ${format}`
-  })
+//     array.forEach( element =>{
+//         let temp = element.split(" ")
+//         let nickName = temp[0]
+//         let time = temp[1]
+//         let format = temp[4]
+//         map[time] = `${nickName} ${time} ${format}`
+//   })
 
-    return map
+//   console.log(map.entries)
 
-}
+  
+//   console.log(sortedAsc)
+
+//     return sortedAsc
+
+// }
 
 
 
@@ -356,17 +361,6 @@ document.getElementById("main_content").addEventListener("mouseup" ,(event)=>{
             userTime = `${minutes}:${seconds}::${miliseconds}`
             miliseconds+=4
         },4)
-        interval = setInterval(() => {
-        seconds = seconds < 10 ? `0${seconds}` : seconds
-        if(seconds % 60 == 0)
-        {
-            time_counter != 0 ? minutes++ : time_counter++
-            minutes = minutes < 10 ? `0${minutes}` : minutes
-            seconds=0
-        }
-        document.getElementById("timer").innerText = `${minutes}:${seconds}`
-        seconds++
-    },1000)
 
         click_counter++;
     }

@@ -127,6 +127,7 @@ input::-webkit-inner-spin-button {
 
 #leaders{
     border:1px solid rgba(0, 0, 0, 0.79);
+    overflow-y: scroll;
 }
 
 .champion{
