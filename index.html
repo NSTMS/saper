@@ -8,7 +8,7 @@
     <title>minesweeper</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="loadCookies()">
     <header>
         <h1 id="main_title"><a href="index.html">sweeper</a></h1>
     </header>
@@ -30,7 +30,7 @@
             <label for="form_mines">Mines:</label>
             <input type="number" id="form_mines" value="10" max="40" name="form_mines">    
         </div>
-        <button onclick="validation()"><img src="./counters/endurance.png" width="32px"></button>
+        <button onclick="validation()"><img src="./counters/check.png" width="32px"></button>
     </div>
 
 
@@ -44,17 +44,16 @@
             <div id="gameInfo">
                 <div id="flags">Flags: 0</div>
             </div>
-    </div>
-
-
-    <div id="leaderboard">
-        <div id="here-add-absolute">
-            <div id="title" onclick="showLeaderboard()">
-                <p id="TOPKA">T</p>
+            <div id="leaderboard">
+                <div id="title">
+                    <p id="TOPKA">LEADERBOARD</p>
+                </div>
+                <div id="leaders"></div>
             </div>
-            <div id="leaders"></div>
-        </div>
     </div>
+
+
+  
 
     <script src="script.js" defer></script>
 </body>

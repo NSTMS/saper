@@ -4,22 +4,20 @@
     font-family: 'Lato', sans-serif;
 }
 
-body{
-    background-color:#8d99ae;
-}
+
 header{
     width:100%;
     height:80px;
     display:grid;
     place-items: center;
-    background-color: #2b2d42;
-    color:#8d99ae;
+    background-color: rgba(0, 0, 0, 0.79);
+    color:white;
     margin-bottom:20px;
 }
 
 a{
     text-decoration: none;
-    color:#8d99ae;
+    color:white;
 }
 
 
@@ -38,7 +36,6 @@ a{
 }
 
 input{
-    background-color: #8d99ae;
     color:#2b2d42;
     outline: none;
     border:none;
@@ -54,28 +51,26 @@ button{
     height:32px;
     width:32px;
     border-radius: 50%;
-    background-color: #8d99ae;
-    color:#2b2d42;
+    color:rgba(0, 0, 0, 0.79);
     font-size:15px;
 }
 button:hover{
-    color: #8d99ae;
-    background-color:#2b2d42;
+    background-color:rgba(0, 0, 0, 0.79);
 }
 
 
 #main_nav{
     width:500px;
     height:50px;
-    background-color: #2b2d42;
-    color:#8d99ae;
+    background-color: rgba(0, 0, 0, 0.79);
+    color:white;
     display:grid;
     place-items: center;
     font-size:20px;
+    border: 1px solid rgba(0, 0, 0, 0.79);
 }
 
 #main_content{
-    background-color: #8d99ae;
     display:grid;
 }
 
@@ -94,9 +89,8 @@ button:hover{
 
 .one-cube{
     cursor: pointer;
-    background-color: #2b2d42;
-    color:#8d99ae;
-    border:2px solid #8d99ae;
+    color:white;
+    border:2px solid rgba(0, 0, 0, 0.79);
     width:50px;
     height:50px;
     display:grid;
@@ -107,92 +101,39 @@ button:hover{
 
 .flag{
     transition: box-shadow 0.1s ease-in;
-    box-shadow:0px 0px 0px 10px black inset;
+    box-shadow:0px 0px 0px 10px rgba(0, 0, 0, 0.79) inset;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+#leaderboard{
+    display:flex;
+    flex-direction: column;
+    margin-top:100px;
+    margin-bottom:100px;
 
+}
 #title{    
-    position:absolute;
-    bottom:100px;
-    width:70px;
-    right:50px;
-    height:70px;
-    border-radius: 50%;
-
-        
-
-    background-color:#2b2d42;
-    color: #8d99ae;
-    cursor: pointer;
+    width:500px;
+    height:50px;
+    background-color: rgba(0, 0, 0, 0.79);
+    color:white;
+    display:grid;
+    place-items: center;
+    font-size:20px;
 }
 
-#title p{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    left:31px;
-    top:24px;
-}
 #leaders{
-    display:none;
+    border:1px solid rgba(0, 0, 0, 0.79);
 }
+
 .champion{
     display:grid;
     place-items: center;
     height:50px;
     color:rgba(141, 153, 174,0.7);
     background-color:rgba(43, 45, 66,0.7);
-    border:2px solid #2b2d42;
-}
-.topka-onclick{
-    transition:0.4s linear;
-    z-index:10;  
-    width:600px;
-    height:700px;
-    position:absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    background-color: rgba(66, 66, 66, 0.5);
-}
-.topka-onclick #title{
-    position:relative;
-    margin-top:100px;
-    margin-left:50px;
-    border-radius: 0;
-    width:600px;
-}
-.topka-onclick #TOPKA{
-    position: relative;
-    display:grid;
-    place-items: center;
-    left:0;
-    right:0;
-}
-
-.animation-b{
-    animation: animation-backward 0.4s linear;
-}
-
-
-@keyframes animation-backward {
-    from{
-        width:600px;
-        position:absolute;
-        bottom:80%;
-        right:50%;
-        z-index:10;
-    }
-    to{
-        position:absolute;
-        width:70px;
-        bottom:100px;
-        right:50px;
-    }
-
+    border:2px solid rgba(0, 0, 0, 0.79);
 }

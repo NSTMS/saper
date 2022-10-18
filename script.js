@@ -1,8 +1,7 @@
 let minesArr = new Set()
-let cubesArray,helper, wasChecked = new Array()
+let cubesArray,helper, wasChecked,records = new Array()
 let interval,firstClick,s_width,s_height,mines,nick,flags,click_counter = 0
-let formatMap = new Map()
-let valuesMap = new Map()
+let userTime,format = ""
 class Cube{
     constructor(){
         this.id = 0
@@ -29,11 +28,15 @@ function validation()
     nick = document.getElementById("form_nick").value
     
     
-    if(nick.length == 0 || s_width <= 0 || s_height <=0 || mines == 1 || s_width*s_height<mines)
+    if(nick.length == 0 || s_width <= 0 || s_height <=0 || mines < 3 || s_width*s_height<mines)
     {
         interval = clearInterval(interval)
         alert("mordo, złe dane")
-    }else generateSweeper()
+    }else
+    {
+        interval = clearInterval(interval)
+        generateSweeper()
+    } 
     
 }
 
@@ -44,6 +47,7 @@ function generateSweeper(){
     
     // generate grid with exact same width and height as cubes
     document.getElementById("main_nav").style.width = `${s_width*50}px`
+
     document.getElementById("main_content").style.width = `${s_width*50}px`
     document.getElementById("main_content").style.height = `${s_height*50}px`
     
@@ -54,13 +58,16 @@ function generateSweeper(){
     
     // settings reset
     document.getElementById("main_content").style.pointerEvents = "all"
+    loadCookies()
     helper = []
     wasChecked = []
     firstClick = 0
     cubesArray = []
     flags = mines
+    format = ""
     click_counter = 0
     document.getElementById("main_content").innerHTML = ``
+    format = `${s_width}x${s_height}x${mines}`
     document.getElementById("timer").innerText = `00:00`
     document.getElementById("flags").textContent = `Flags: ${flags}`
     for(let i=0;i<temp;i++) wasChecked.push(i)
@@ -78,6 +85,7 @@ function generateMines(mines, max)
     while(minesArr.size < mines)
 
     console.log(minesArr)
+
 }
 
 function createCubes()
@@ -136,7 +144,13 @@ function createCubes()
 
 
 document.getElementById("main_content").addEventListener("click" ,(event)=>{
-    if(event.target.id != "main_content") cubesReveal(helper[event.target.id])
+    if(event.target.id != "main_content")
+    {
+        if(event.target.classList.contains("flag") && event.which !== 3) return
+        else cubesReveal(helper[event.target.id])
+    }
+
+
 })
 
 function cubesReveal(cube)
@@ -183,7 +197,7 @@ function cubesReveal(cube)
                 }
                 
                 document.getElementById(cube.id).style.pointerEvents = "none"
-                document.getElementById(cube.id).style.background = "blue"
+                document.getElementById(cube.id).style.background = "rgba(0, 0, 0, 0.79)"
                 document.getElementById(cube.id).innerText = cube.minesAround
                 document.getElementById(cubesArray[x][y].id).style.pointerEvents = "none"
              
@@ -207,13 +221,13 @@ function fill(x,y)
         }
         if(cubesArray[x][y].minesAround == 0) 
         {
-            document.getElementById(cubesArray[x][y].id).style.background = "yellow"
+            document.getElementById(cubesArray[x][y].id).style.background = "rgba(0, 0, 0, 0.72)"
             document.getElementById(cubesArray[x][y].id).style.pointerEvents = "none"
 
         }
         if(cubesArray[x][y].minesAround !=0){
             document.getElementById(cubesArray[x][y].id).style.pointerEvents = "none"
-            document.getElementById(cubesArray[x][y].id).style.background = "blue"
+            document.getElementById(cubesArray[x][y].id).style.background = "rgba(0, 0, 0, 0.79)"
             document.getElementById(cubesArray[x][y].id).innerText = cubesArray[x][y].minesAround
 
         }
@@ -236,28 +250,67 @@ function areYouWinningSon()
             element.style.pointerEvents = "none"
         })
 
-
-
         setTimeout(()=>{
             alert("siema wygrałeś")
-        },0)
-        formatMap.set(nick,`${s_width} ${s_height}`) 
-        console.log(formatMap.get(nick))
-        document.cookie = `nicks=${formatMap.get(nick)}`
-        const list_element = document.createElement("div")
-        list_element.classList.add(`champion`)
-        list_element.innerHTML = `<p>Format: ${formatMap.get(nick)}</p>`
-        document.getElementById("leaders").appendChild(list_element)
+        },100)
 
-
+        console.log(records)
+        
+        records.push(`${nick} ${userTime} -  ${format}`)
+        document.cookie = records
+        loadCookies()
     }
 
 }
+function loadCookies()
+{
+    document.getElementById("leaders").innerHTML = ""
+    let div = document.createElement("div")
+    if(document.cookie == ""){
+        div.textContent = "nie ma cookie"
+    }
+    else{
+        let array = document.cookie
+        document.getElementById("leaders").innerHTML = ''
+        array = array.split(",")
+        array = sortArray(array)
+        console.log("sorted:" , array)
+        array.forEach(element =>{
+            let div = document.createElement("div")
+            div.textContent = element
+            document.getElementById("leaders").appendChild(div)    
+        })    }
+    document.getElementById("leaders").appendChild(div)
+
+}
+
+function sortArray(array)
+{
+    let map = new Map()
+
+    array.forEach( element =>{
+        let temp = element.split(" ")
+        let nickName = temp[0]
+        let time = temp[1]
+        let format = temp[4]
+        map[time] = `${nickName} ${time} ${format}`
+  })
+
+  let mapAsc = new Map([...map].sort((a, b) => String(a[0]).localeCompare(b[0])))
+
+  
+
+    return mapAsc
+
+}
+
+
+
 function endGame()
 {
     setTimeout(()=>{
         alert("siema przegrałeś")
-    },0)
+    },100)
 
     interval = clearInterval(interval)
 
@@ -265,73 +318,70 @@ function endGame()
         element.style.pointerEvents = "none"
     })
 
-
     minesArr.forEach(element => {
-        document.getElementById(element).style.background = "red"
-    })
-  
-
-    
+        document.getElementById(element).style.background = "rgba(255, 0, 0, 0.75)"
+    }) 
 }
-
-
-function showLeaderboard()
-{
-    document.getElementById("here-add-absolute").classList.add("topka-onclick")
-    document.getElementById("leaders").style.display = "block"
-    document.getElementById("TOPKA").style.marginRight="-15px"
-    document.getElementById("title").classList.remove("animation-b")
-    document.getElementById("title").setAttribute("onclick",`hideLeaderboard()`)
-}
-
-function hideLeaderboard()
-{
-    document.getElementById("title").classList.add("animation-b")
-    document.getElementById("leaders").style.display = "none"
-    document.getElementById("here-add-absolute").classList.remove("topka-onclick")
-    document.getElementById("title").setAttribute("onclick",`showLeaderboard()`)
-
-}
-
 
 document.getElementById("main_content").addEventListener("mouseup" ,(event)=>{
-
     if(click_counter == 0)
     {      
-            // set timer
+        // set timer
         interval = clearInterval(interval)
         let minutes = 0
         let seconds = 0
+        let miliseconds = 0
         let time_counter = 0
-        console.log("siam")
+
         interval = setInterval(() => {
-        seconds = seconds < 10 ? `0${seconds}` : seconds
-        if(seconds % 60 == 0)
-        {
-            time_counter != 0 ? minutes++ : time_counter++
-            minutes = minutes < 10 ? `0${minutes}` : minutes
-            seconds=0
-        }
-        document.getElementById("timer").innerText = `${minutes}:${seconds}`
-        seconds++
-    },100)
+            if(miliseconds % 1000 == 0)
+            {
+                seconds++
+                if(seconds % 60 == 0)
+                {
+                    minutes++
+                    seconds=0
+                }
+                miliseconds=0
+            }
+            if(seconds < 10)
+            {
+                if(minutes < 10)
+                {
+                    document.getElementById("timer").textContent = `0${minutes}:0${seconds}`
+                }
+                else{
+                    document.getElementById("timer").textContent = `${minutes}:0${seconds}`
+                }
+            }
+            else{
+                document.getElementById("timer").textContent = `${minutes}:${seconds}`
+            }
+            userTime = `${minutes}:${seconds}::${miliseconds}`
+            miliseconds+=4
+        },4)
 
         click_counter++;
     }
+
     document.getElementById("flags").textContent = `Flags: ${flags}`
         if(event.which == 3)
         {
-            if(helper[event.target.id].isChecked == false && event.target.id != "main_content" && flags != 0)
+            if(helper[event.target.id].isChecked !== "undefinded")
             {
-                if(event.target.classList.contains("flag"))
+                if(helper[event.target.id].isChecked == false && event.target.id != "main_content" && flags != 0)
                 {
-                    event.target.classList.remove("flag")
-                    flags++
-                }else 
-                {
-                    flags--
-                    event.target.classList.add("flag")
+                    if(event.target.classList.contains("flag"))
+                    {
+                        event.target.classList.remove("flag")
+                        flags++
+                    }else 
+                    {
+                        flags--
+                        event.target.classList.add("flag")
+                    }
                 }
             }
+         
         }
 });
